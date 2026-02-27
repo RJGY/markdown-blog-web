@@ -1,19 +1,30 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import GithubSlugger from 'github-slugger';
 
 const postsDirectory = path.join(process.cwd(), 'content');
 
+/** Strip markdown formatting from heading text to match rehype-slug's plain-text input */
+function stripMarkdownFormatting(text: string): string {
+  return text
+    .replace(/\*\*/g, '')
+    .replace(/\*/g, '')
+    .replace(/`/g, '')
+    .replace(/_/g, '')
+    .replace(/\s*:\s*$/, '')
+    .trim();
+}
+
 export function extractHeadings(content: string) {
-  // Regex to find ## through ###### headings
+  const slugger = new GithubSlugger();
   const headingLines = content.split('\n').filter((line) => line.match(/^#{2,6}\s/));
 
   return headingLines.map((line) => {
-    const level = line.split(' ')[0].length; // 2 for ##, 3 for ###, etc.
-    const text = line.replace(/^#{2,6}\s/, '').trim();
-    // Create a URL-friendly ID: "Hello World" -> "hello-world"
-    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-    
+    const level = line.split(' ')[0].length;
+    const rawText = line.replace(/^#{2,6}\s/, '').trim();
+    const text = stripMarkdownFormatting(rawText);
+    const id = slugger.slug(text);
     return { level, text, id };
   });
 }

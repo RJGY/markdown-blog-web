@@ -1,7 +1,7 @@
 ---
 title: "Reading danger"
 date: "2026-02-08"
-description: "How to readd danger"
+description: "How to read danger"
 ---
 
 # Reading Danger & Progression

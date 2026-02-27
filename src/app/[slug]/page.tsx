@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import Link from 'next/link';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
@@ -22,25 +23,31 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <div className="w-full py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6 flex justify-between items-center gap-3">
-          <HomeButton />
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <HomeButton />
+            <Link
+              href={`/dual?left=${slug}`}
+              className="nav-button inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition"
+            >
+              <span>Dual View</span>
+            </Link>
+          </div>
           <ModeToggle />
         </div>
 
-        
-
-        <article>
-          <header className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
-            <time className="text-gray-500">{frontmatter.date}</time>
-          </header>
-
-          <div className="mb-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr]">
+          <aside className="order-2 lg:order-1 lg:sticky lg:top-24 lg:self-start">
             <TableOfContents headings={headings} />
-          </div>
+          </aside>
+          <article className="order-1 lg:order-2">
+            <header className="mb-8">
+              <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+              <time className="text-gray-500">{frontmatter.date}</time>
+            </header>
 
-          <div className="prose prose-slate lg:prose-xl dark:prose-invert">
+            <div className="prose prose-slate lg:prose-xl dark:prose-invert">
             <MDXRemote
               source={content}
               options={{
@@ -50,8 +57,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 },
               }}
             />
-          </div>
-        </article>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   );
