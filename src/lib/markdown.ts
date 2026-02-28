@@ -18,26 +18,82 @@ function stripMarkdownFormatting(text: string): string {
 
 export function extractHeadings(content: string) {
   const slugger = new GithubSlugger();
-  const headingLines = content.split('\n').filter((line) => line.match(/^#{2,6}\s/));
+  const headingLines = content.split('\n').filter((line) => line.match(/^#{1,6}\s/));
 
   return headingLines.map((line) => {
     const level = line.split(' ')[0].length;
-    const rawText = line.replace(/^#{2,6}\s/, '').trim();
+    const rawText = line.replace(/^#{1,6}\s/, '').trim();
     const text = stripMarkdownFormatting(rawText);
     const id = slugger.slug(text);
     return { level, text, id };
   });
 }
 
+/** Check if a slug exists as either a single file or folder post */
+export function isPost(slug: string): boolean {
+  const filePath = path.join(postsDirectory, `${slug}.md`);
+  const folderPath = path.join(postsDirectory, slug);
+  const indexPath = path.join(folderPath, 'index.md');
+  return (
+    fs.existsSync(filePath) ||
+    (fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory() && fs.existsSync(indexPath))
+  );
+}
+
+/** Check if a path is a folder with index.md (a "collection" post) */
+function isFolderPost(slug: string): boolean {
+  const folderPath = path.join(postsDirectory, slug);
+  const indexPath = path.join(folderPath, 'index.md');
+  return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory() && fs.existsSync(indexPath);
+}
+
+/** Get a single-file post from content/{slug}.md */
+function getSingleFilePost(slug: string) {
+  const fullPath = path.join(postsDirectory, `${slug}.md`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
+  const headings = extractHeadings(content);
+  return { slug, frontmatter: data, content, headings };
+}
+
+/** Get a folder-based post from content/{slug}/ with index.md + other .md files */
+function getFolderPost(slug: string) {
+  const folderPath = path.join(postsDirectory, slug);
+  const indexPath = path.join(folderPath, 'index.md');
+  const indexContents = fs.readFileSync(indexPath, 'utf8');
+  const { data: frontmatter } = matter(indexContents);
+
+  // Get all other .md files (excluding index.md), sorted alphabetically
+  const files = fs.readdirSync(folderPath)
+    .filter((f) => f.endsWith('.md') && f !== 'index.md')
+    .sort();
+
+  const contentParts: string[] = [];
+  const sections: { title: string; content: string }[] = [];
+
+  for (const file of files) {
+    const filePath = path.join(folderPath, file);
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { data: fileFrontmatter, content } = matter(fileContents);
+    const sectionTitle = fileFrontmatter?.title || file.replace(/\.md$/, '').replace(/-/g, ' ');
+    const sectionHeading = `# ${sectionTitle}\n\n---\n\n`;
+    const sectionContent = sectionHeading + content;
+    contentParts.push(sectionContent);
+    sections.push({ title: sectionTitle, content: sectionContent });
+  }
+
+  const content = contentParts.join('\n\n---\n\n');
+  const headings = extractHeadings(content);
+  return { slug, frontmatter, content, headings, sections };
+}
+
 // Update your getPostBySlug to include headings
 export function getPostBySlug(slug: string) {
   try {
-    const fullPath = path.join(process.cwd(), 'content', `${slug}.md`);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
-    const headings = extractHeadings(content); // Get the headings
-
-    return { slug, frontmatter: data, content, headings };
+    if (isFolderPost(slug)) {
+      return getFolderPost(slug);
+    }
+    return getSingleFilePost(slug);
   } catch (e) {
     // Return a default or trigger a 404
     return { slug, frontmatter: { title: "Not Found", date: "" }, content: "Post not found.", headings: [] };
@@ -45,9 +101,17 @@ export function getPostBySlug(slug: string) {
 }
 
 export function getAllPosts() {
-  const filenames = fs.readdirSync(postsDirectory);
-  return filenames.map((filename) => {
-    const slug = filename.replace(/\.md$/, '');
-    return getPostBySlug(slug);
-  });
+  const entries = fs.readdirSync(postsDirectory, { withFileTypes: true });
+  const posts: ReturnType<typeof getPostBySlug>[] = [];
+
+  for (const entry of entries) {
+    if (entry.isFile() && entry.name.endsWith('.md')) {
+      const slug = entry.name.replace(/\.md$/, '');
+      posts.push(getPostBySlug(slug));
+    } else if (entry.isDirectory() && fs.existsSync(path.join(postsDirectory, entry.name, 'index.md'))) {
+      posts.push(getPostBySlug(entry.name));
+    }
+  }
+
+  return posts;
 }
