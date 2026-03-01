@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { TableOfContents } from './TableOfContents';
+import { TocWithActiveMarker } from './TocWithActiveMarker';
 
 interface TocMobileMenuProps {
   headings: { level: number; text: string; id: string }[];
@@ -92,7 +92,7 @@ export function TocMobileMenu({ headings }: TocMobileMenuProps) {
             if (target) setIsOpen(false);
           }}
         >
-          <TableOfContents headings={headings} />
+          <TocWithActiveMarker headings={headings} />
         </div>
       </div>
     </>

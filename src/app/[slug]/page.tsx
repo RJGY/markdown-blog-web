@@ -5,7 +5,8 @@ import remarkGfm from 'remark-gfm';
 import { getPostBySlug, isPost } from '@/lib/markdown';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { TableOfContents } from '@/components/TableOfContents';
+import { ActiveTocProvider } from '@/components/ActiveTocContext';
+import { TocWithActiveMarker } from '@/components/TocWithActiveMarker';
 import { TocMobileMenu } from '@/components/TocMobileMenu';
 import { ModeToggle } from "@/components/ModeToggle";
 import { HomeButton } from "@/components/HomeButton";
@@ -29,27 +30,28 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   };
 
   return (
-    <div className="w-full py-12 px-4">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 py-3 sticky top-0 z-30 -mx-4 px-4 lg:mx-0 lg:px-0 lg:py-0 lg:static bg-[var(--background)] lg:bg-transparent border-b border-slate-200 dark:border-slate-700 lg:border-0">
-          <div className="flex items-center gap-3">
-            <TocMobileMenu headings={headings} />
-            <HomeButton />
-            <Link
-              href={`/dual?left=${slug}`}
-              className="nav-button inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition"
-            >
-              <span>Dual View</span>
-            </Link>
+    <ActiveTocProvider headings={headings}>
+      <div className="w-full py-12 px-4">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 py-3 sticky top-0 z-30 -mx-4 px-4 lg:mx-0 lg:px-0 lg:py-0 lg:static bg-[var(--background)] lg:bg-transparent border-b border-slate-200 dark:border-slate-700 lg:border-0">
+            <div className="flex items-center gap-3">
+              <TocMobileMenu headings={headings} />
+              <HomeButton />
+              <Link
+                href={`/dual?left=${slug}`}
+                className="nav-button inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition"
+              >
+                <span>Dual View</span>
+              </Link>
+            </div>
+            <ModeToggle />
           </div>
-          <ModeToggle />
-        </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr]">
-          <aside className="order-2 lg:order-1 lg:sticky lg:top-24 lg:self-start hidden lg:block">
-            <TableOfContents headings={headings} />
-          </aside>
-          <div className="order-1 lg:order-2 space-y-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr]">
+            <aside className="order-2 lg:order-1 lg:sticky lg:top-24 lg:self-start hidden lg:block">
+              <TocWithActiveMarker headings={headings} />
+            </aside>
+            <div className="order-1 lg:order-2 space-y-8">
             <header className="mb-8">
               <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
               <h3 className="text-lg mb-2">{frontmatter.description}</h3>
@@ -85,9 +87,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 />
               </div>
             )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ActiveTocProvider>
   );
 }

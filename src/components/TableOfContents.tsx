@@ -1,4 +1,10 @@
-export function TableOfContents({ headings }: { headings: any[] }) {
+interface TableOfContentsProps {
+  headings: { level: number; text: string; id: string }[];
+  activeHeadingId?: string | null;
+  activeSectionId?: string | null;
+}
+
+export function TableOfContents({ headings, activeHeadingId = null, activeSectionId = null }: TableOfContentsProps) {
   if (headings.length === 0) return null;
 
   // Map levels to Tailwind padding classes (level 1 = titles, 2-6 indented +1 extra)
@@ -26,14 +32,21 @@ export function TableOfContents({ headings }: { headings: any[] }) {
               </li>
             );
           }
+          const isActiveSection = heading.level === 1 && activeSectionId === heading.id;
+          const isActiveHeading = activeHeadingId === heading.id;
+
           elements.push(
             <li
               key={heading.id}
-              className={`${indentationMap[heading.level] || "pl-0"}`}
+              className={`${indentationMap[heading.level] || "pl-0"} ${isActiveSection ? "border-l-2 border-blue-500 dark:border-blue-400 pl-2 -ml-0.5" : ""}`}
             >
               <a
                 href={`#${heading.id}`}
-                className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+                className={`block transition-colors text-sm ${
+                  isActiveHeading
+                    ? "text-blue-600 dark:text-blue-400 font-semibold"
+                    : "text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400"
+                }`}
               >
                 {heading.text}
               </a>
