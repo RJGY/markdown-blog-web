@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Image from 'next/image';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
@@ -37,25 +37,37 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             <div className="flex items-center gap-3">
               <TocMobileMenu headings={headings} />
               <HomeButton />
-              <Link
-                href={`/dual?left=${slug}`}
-                className="nav-button inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition"
-              >
-                <span>Dual View</span>
-              </Link>
             </div>
             <ModeToggle />
           </div>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr]">
-            <aside className="order-2 lg:order-1 lg:sticky lg:top-24 lg:self-start hidden lg:block">
+            <aside className="order-2 lg:order-1 lg:sticky lg:top-24 lg:self-start hidden lg:flex lg:flex-col lg:gap-4">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={2160}
+                height={2160}
+                className="h-32 w-32 lg:h-60 lg:w-60 object-contain flex-shrink-0"
+              />
               <TocWithActiveMarker headings={headings} />
             </aside>
             <div className="order-1 lg:order-2 space-y-8">
             <header className="mb-8">
-              <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
-              <h3 className="text-lg mb-2">{frontmatter.description}</h3>
-              <time className="text-gray-500">{frontmatter.date}</time>
+              <div className="flex flex-col gap-4">
+                <Image
+                  src="/logo.png"
+                  alt="Logo"
+                  width={2160}
+                  height={2160}
+                  className="h-32 w-32 object-contain flex-shrink-0 lg:hidden"
+                />
+                <div>
+                  <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+                  <h3 className="text-lg mb-2">{frontmatter.description}</h3>
+                  <time className="text-gray-500">{frontmatter.date}</time>
+                </div>
+              </div>
             </header>
 
             {isHorizontal && sections ? (

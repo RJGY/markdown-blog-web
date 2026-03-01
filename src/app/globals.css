@@ -5,6 +5,7 @@
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --breakpoint-lg: 98.125rem; /* 1570px */
 }
 
 /* 1. Define Light Mode variables */
@@ -233,5 +234,5 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 2rem;
+  scroll-padding-top: 4rem;
 }
