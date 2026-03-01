@@ -6,7 +6,7 @@ export function HomeButton() {
   return (
     <Link
       href="/"
-      className="nav-button inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition"
+      className="nav-button inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition opacity-50 hover:opacity-100"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -24,7 +24,7 @@ export default function Home() {
           height={2160}
           className="h-32 w-32 lg:absolute lg:-left-60 lg:-top-20 lg:h-60 lg:w-60 object-contain lg:pr-6 order-first"
         />
-        <div>
+        <div className="lg:pt-40">
           <h1 className="text-4xl font-bold pb-2">My Blog</h1>
           <h4 className="text-lg">My Blog Description</h4>
         </div>

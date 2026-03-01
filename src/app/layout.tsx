@@ -23,11 +23,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div
-            className="fixed top-0 left-0 right-0 h-25 -z-10 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url(/banner.png)' }}
-          />
-          {children}
+          <div className="relative min-h-screen">
+            <div
+              className="absolute top-0 left-0 right-0 h-60 -z-10 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: 'url(/banner.png)' }}
+            />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
