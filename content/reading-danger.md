@@ -2,6 +2,7 @@
 title: "Reading danger"
 date: "2026-02-08"
 description: "How to read danger"
+tags: "very big danger"
 ---
 
 # Reading Danger & Progression

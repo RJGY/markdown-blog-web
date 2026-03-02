@@ -5,6 +5,35 @@ import GithubSlugger from 'github-slugger';
 
 const postsDirectory = path.join(process.cwd(), 'content');
 
+export interface PostFrontmatter {
+  title?: string;
+  date?: string;
+  description?: string;
+  layout?: string;
+  tags?: string[];
+  [key: string]: unknown;
+}
+
+export interface Post {
+  slug: string;
+  frontmatter: PostFrontmatter;
+  content: string;
+  headings: { level: number; text: string; id: string }[];
+  sections?: { title: string; content: string; filename: string }[];
+}
+
+/** Parse tags from frontmatter - supports comma-separated string or array */
+export function parseTags(tags: unknown): string[] {
+  if (!tags) return [];
+  if (Array.isArray(tags)) {
+    return [...new Set(tags.map((t) => String(t).trim()).filter(Boolean))];
+  }
+  if (typeof tags === 'string') {
+    return [...new Set(tags.split(',').map((t) => t.trim()).filter(Boolean))];
+  }
+  return [];
+}
+
 /** Strip markdown formatting from heading text to match rehype-slug's plain-text input */
 function stripMarkdownFormatting(text: string): string {
   return text
@@ -48,16 +77,17 @@ function isFolderPost(slug: string): boolean {
 }
 
 /** Get a single-file post from content/{slug}.md */
-function getSingleFilePost(slug: string) {
+function getSingleFilePost(slug: string): Post {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
   const headings = extractHeadings(content);
-  return { slug, frontmatter: data, content, headings };
+  const tags = parseTags(data.tags);
+  return { slug, frontmatter: { ...data, tags }, content, headings };
 }
 
 /** Get a folder-based post from content/{slug}/ with index.md + other .md files */
-function getFolderPost(slug: string) {
+function getFolderPost(slug: string): Post {
   const folderPath = path.join(postsDirectory, slug);
   const indexPath = path.join(folderPath, 'index.md');
   const indexContents = fs.readFileSync(indexPath, 'utf8');
@@ -69,26 +99,30 @@ function getFolderPost(slug: string) {
     .sort();
 
   const contentParts: string[] = [];
-  const sections: { title: string; content: string }[] = [];
+  const sections: { title: string; content: string; filename: string }[] = [];
+  const allTags = new Set<string>(parseTags(frontmatter.tags));
 
   for (const file of files) {
     const filePath = path.join(folderPath, file);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data: fileFrontmatter, content } = matter(fileContents);
-    const sectionTitle = fileFrontmatter?.title || file.replace(/\.md$/, '').replace(/-/g, ' ');
+    parseTags(fileFrontmatter?.tags).forEach((t) => allTags.add(t));
+    const filename = file.replace(/\.md$/, '');
+    const sectionTitle = fileFrontmatter?.title || filename.replace(/-/g, ' ');
     const sectionHeading = `# ${sectionTitle}\n\n---\n\n`;
     const sectionContent = sectionHeading + content;
     contentParts.push(sectionContent);
-    sections.push({ title: sectionTitle, content: sectionContent });
+    sections.push({ title: sectionTitle, content: sectionContent, filename });
   }
 
   const content = contentParts.join('\n\n---\n\n');
   const headings = extractHeadings(content);
-  return { slug, frontmatter, content, headings, sections };
+  const tags = Array.from(allTags).sort();
+  return { slug, frontmatter: { ...frontmatter, tags }, content, headings, sections };
 }
 
 // Update your getPostBySlug to include headings
-export function getPostBySlug(slug: string) {
+export function getPostBySlug(slug: string): Post {
   try {
     if (isFolderPost(slug)) {
       return getFolderPost(slug);
@@ -96,13 +130,13 @@ export function getPostBySlug(slug: string) {
     return getSingleFilePost(slug);
   } catch (e) {
     // Return a default or trigger a 404
-    return { slug, frontmatter: { title: "Not Found", date: "" }, content: "Post not found.", headings: [] };
+    return { slug, frontmatter: { title: "Not Found", date: "", tags: [] }, content: "Post not found.", headings: [] };
   }
 }
 
-export function getAllPosts() {
+export function getAllPosts(): Post[] {
   const entries = fs.readdirSync(postsDirectory, { withFileTypes: true });
-  const posts: ReturnType<typeof getPostBySlug>[] = [];
+  const posts: Post[] = [];
 
   for (const entry of entries) {
     if (entry.isFile() && entry.name.endsWith('.md')) {

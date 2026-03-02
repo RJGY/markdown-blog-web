@@ -2,6 +2,7 @@
 title: "Hello World Title"
 date: "2026-02-07"
 description: "How to build a blog"
+tags: "tutorial, getting-started"
 ---
 
 # Welcome to my blog!

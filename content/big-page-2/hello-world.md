@@ -2,6 +2,7 @@
 title: "Hello World Title"
 date: "2026-02-07"
 description: "How to build a blog"
+tags: "tutorial, getting-started"
 ---
 
 This is a post written in **Markdown**. I can just drop this file here and it works!
