@@ -37,7 +37,7 @@
 
   .dark .toc-nav {
     background-color: rgba(15, 23, 42, 1); /* slate-900 style */
-    border-color: rgba(30, 64, 175, 0.9);
+    border-color: rgba(100, 116, 139, 0.5); /* slate-500 */
   }
 
   .nav-button {

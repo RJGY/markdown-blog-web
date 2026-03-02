@@ -17,13 +17,13 @@ export default function Home() {
         <ModeToggle />
       </div>
       <div className="mb-8">
-        <div className="flex flex-row items-end gap-4">
+        <div className="flex flex-col lg:flex-row items-start lg:items-end gap-4">
           <Image
             src="/logo.png"
             alt="Logo"
             width={2160}
             height={2160}
-            className="h-60 w-60 object-contain flex-shrink-0"
+            className="h-40 w-40 lg:h-60 lg:w-60 object-contain flex-shrink-0"
           />
           <div className="pb-1">
             <h1 className="text-4xl font-bold pb-2">My Blog</h1>

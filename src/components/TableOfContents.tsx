@@ -38,14 +38,14 @@ export function TableOfContents({ headings, activeHeadingId = null, activeSectio
           elements.push(
             <li
               key={heading.id}
-              className={`${indentationMap[heading.level] || "pl-0"} ${isActiveSection ? "border-l-2 border-blue-500 dark:border-blue-400 pl-2 -ml-0.5" : ""}`}
+              className={`${indentationMap[heading.level] || "pl-0"} ${isActiveSection ? "border-l-2 border-slate-500 dark:border-slate-400 pl-2 -ml-0.5" : ""}`}
             >
               <a
                 href={`#${heading.id}`}
                 className={`block transition-colors text-sm ${
                   isActiveHeading
-                    ? "text-blue-600 dark:text-blue-400 font-semibold"
-                    : "text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400"
+                    ? "text-slate-700 dark:text-slate-300 font-semibold"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300"
                 }`}
               >
                 {heading.text}
