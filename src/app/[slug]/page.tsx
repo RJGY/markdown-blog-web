@@ -32,7 +32,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   return (
     <ActiveTocProvider headings={headings}>
       <div className="w-full pt-0">
-        <div className="sticky top-0 z-10 w-full bg-[var(--background)] border-b border-slate-200 dark:border-slate-700 opacity-100 lg:opacity-50">
+        <div className="sticky top-0 z-10 w-full bg-[var(--background)] border-b border-slate-200 dark:border-slate-700 opacity-50">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 py-3 px-4">
             <div className="flex items-center gap-3">
               <TocMobileMenu headings={headings} />
@@ -43,7 +43,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </div>
 
         <div className="px-4 pb-4">
-          <div className="mx-auto max-w-6xl pt-4">
+          <div className="mx-auto max-w-6xl lg:pt-30 pt-10">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr]">
               <div className="order-2 lg:order-1 hidden lg:flex lg:flex-col lg:gap-4">
                 <Image
@@ -67,7 +67,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     height={2160}
                     className="h-32 w-32 object-contain flex-shrink-0 lg:hidden"
                   />
-                  <div className="pt-5 lg:pt-64">
+                  <div className="pt-5 lg:pt-54">
                     <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
                     {Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-2">

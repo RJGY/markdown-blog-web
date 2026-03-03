@@ -16,8 +16,8 @@ export default function Home() {
       <div className="mb-6 flex justify-end [&>*]:opacity-50 [&>*]:hover:opacity-100 [&>*]:transition-opacity">
         <ModeToggle />
       </div>
-      <div className="mb-8">
-        <div className="flex flex-col lg:flex-row items-start lg:items-end gap-4">
+      <div className="mb-8 pt-20">
+        <div className="flex flex-col items-start gap-4">
           <Image
             src="/logo.png"
             alt="Logo"
