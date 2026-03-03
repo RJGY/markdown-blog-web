@@ -44,7 +44,7 @@ export default async function DualPage({ searchParams }: DualPageProps) {
   return (
     <div className="w-full py-12 px-4">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-6 flex items-center justify-between gap-3">
+        <div className="sticky top-0 z-10 -mx-4 -mt-12 mb-6 flex items-center justify-between gap-3 bg-[var(--background)] px-4 py-3 border-b border-slate-200 dark:border-slate-700">
           <HomeButton />
           <ModeToggle />
         </div>

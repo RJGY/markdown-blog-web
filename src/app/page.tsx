@@ -23,7 +23,7 @@ export default function Home() {
             alt="Logo"
             width={2160}
             height={2160}
-            className="h-40 w-40 lg:h-60 lg:w-60 object-contain flex-shrink-0"
+            className="h-32 w-32 lg:h-50 lg:w-50 object-contain flex-shrink-0"
           />
           <div className="pb-1">
             <h1 className="text-4xl font-bold pb-2">My Blog</h1>

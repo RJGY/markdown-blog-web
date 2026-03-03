@@ -32,7 +32,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   return (
     <ActiveTocProvider headings={headings}>
       <div className="w-full pt-0">
-        <div className="w-full bg-[var(--background)] border-b border-slate-200 dark:border-slate-700 opacity-100 lg:opacity-50">
+        <div className="sticky top-0 z-10 w-full bg-[var(--background)] border-b border-slate-200 dark:border-slate-700 opacity-100 lg:opacity-50">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 py-3 px-4">
             <div className="flex items-center gap-3">
               <TocMobileMenu headings={headings} />
@@ -51,7 +51,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                   alt="Logo"
                   width={2160}
                   height={2160}
-                  className="h-32 w-32 lg:h-60 lg:w-60 object-contain flex-shrink-0"
+                  className="h-32 w-32 lg:h-50 lg:w-50 object-contain flex-shrink-0"
                 />
                 <aside className="lg:sticky lg:top-24 lg:self-start">
                   <TocWithActiveMarker headings={headings} />
@@ -59,7 +59,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               </div>
               <div className="order-1 lg:order-2 space-y-8">
               <header className="mb-8">
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 lg:pt-0 pt-32">
                   <Image
                     src="/logo.png"
                     alt="Logo"
@@ -67,7 +67,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                     height={2160}
                     className="h-32 w-32 object-contain flex-shrink-0 lg:hidden"
                   />
-                  <div className="pt-5 lg:pt-40">
+                  <div className="pt-5 lg:pt-64">
                     <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
                     {Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-2">
@@ -102,7 +102,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                       key={section.filename}
                       className="rounded-lg border border-slate-200 dark:border-slate-700"
                     >
-                      <div className="sticky top-0 z-10 px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-mono text-sm text-slate-600 dark:text-slate-400 rounded-t-lg">
+                      <div className="top-0 z-10 px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-mono text-sm text-slate-600 dark:text-slate-400 rounded-t-lg">
                         {section.filename}.md
                       </div>
                       <div className="p-4 prose prose-slate lg:prose-xl dark:prose-invert max-w-none">

@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="relative min-h-screen">
             <div
-              className="absolute top-0 left-0 right-0 h-60 -z-10 bg-cover bg-center bg-no-repeat"
+              className="absolute top-0 left-0 right-0 h-80 -z-10 bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: 'url(/banner.png)' }}
             />
             {children}
