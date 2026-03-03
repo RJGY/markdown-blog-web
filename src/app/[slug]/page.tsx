@@ -43,7 +43,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </div>
 
         <div className="px-4 pb-4">
-          <div className="mx-auto max-w-6xl lg:pt-30 pt-10">
+          <div className="mx-auto max-w-6xl lg:pt-30 pt-5">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[15rem_1fr]">
               <div className="order-2 lg:order-1 hidden lg:flex lg:flex-col lg:gap-4">
                 <Image
