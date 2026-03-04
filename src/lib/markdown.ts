@@ -5,6 +5,14 @@ import GithubSlugger from 'github-slugger';
 
 const postsDirectory = path.join(process.cwd(), 'content');
 
+/** Reject slugs that could enable path traversal or access outside content/ */
+function isValidSlug(slug: string): boolean {
+  if (!slug || typeof slug !== 'string') return false;
+  if (slug.includes('..') || slug.includes('/') || slug.includes('\\')) return false;
+  if (path.isAbsolute(slug)) return false;
+  return /^[a-zA-Z0-9_-]+$/.test(slug);
+}
+
 export interface PostFrontmatter {
   title?: string;
   date?: string;
@@ -62,6 +70,7 @@ export function extractHeadings(content: string) {
 
 /** Check if a slug exists as either a single file or folder post */
 export function isPost(slug: string): boolean {
+  if (!isValidSlug(slug)) return false;
   const filePath = path.join(postsDirectory, `${slug}.md`);
   const folderPath = path.join(postsDirectory, slug);
   const indexPath = path.join(folderPath, 'index.md');
@@ -125,6 +134,9 @@ function getFolderPost(slug: string): Post {
 
 // Update your getPostBySlug to include headings
 export function getPostBySlug(slug: string): Post {
+  if (!isValidSlug(slug)) {
+    return { slug, frontmatter: { title: "Not Found", date: "", tags: [] }, content: "Post not found.", headings: [] };
+  }
   try {
     if (isFolderPost(slug)) {
       return getFolderPost(slug);
@@ -143,8 +155,8 @@ export function getAllPosts(): Post[] {
   for (const entry of entries) {
     if (entry.isFile() && entry.name.endsWith('.md')) {
       const slug = entry.name.replace(/\.md$/, '');
-      posts.push(getPostBySlug(slug));
-    } else if (entry.isDirectory() && fs.existsSync(path.join(postsDirectory, entry.name, 'index.md'))) {
+      if (isValidSlug(slug)) posts.push(getPostBySlug(slug));
+    } else if (entry.isDirectory() && isValidSlug(entry.name) && fs.existsSync(path.join(postsDirectory, entry.name, 'index.md'))) {
       posts.push(getPostBySlug(entry.name));
     }
   }
@@ -162,7 +174,7 @@ const PAGE_CSS_NAMES = ['styles.css', 'page.css'];
  * Returns the CSS content or null if no file exists.
  */
 export function getPageCss(slug: string): string | null {
-  if (!slug || slug.includes('..') || path.isAbsolute(slug)) return null;
+  if (!isValidSlug(slug)) return null;
 
   // Folder post: content/{slug}/styles.css or content/{slug}/page.css
   if (isFolderPost(slug)) {
