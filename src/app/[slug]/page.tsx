@@ -115,7 +115,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                       <div className="top-0 z-10 px-4 py-2 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-mono text-sm text-slate-600 dark:text-slate-400 rounded-t-lg">
                         {section.filename}.md
                       </div>
-                      <div className="p-4 pt-0 prose prose-slate lg:prose-xl dark:prose-invert max-w-none">
+                      <div className="p-4 pt-2 prose prose-slate lg:prose-xl dark:prose-invert max-w-none">
                         <MDXRemote
                           source={section.content}
                           options={{ mdxOptions: mdxOptions }}
