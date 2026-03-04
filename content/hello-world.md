@@ -5,10 +5,7 @@ description: "How to build a blog"
 tags: "tutorial, getting-started"
 ---
 
-# Welcome to my blog!
 This is a post written in **Markdown**. I can just drop this file here and it works!
-
-# Heading
 
 ## Heading 2
 

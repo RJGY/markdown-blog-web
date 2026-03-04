@@ -1,0 +1,6 @@
+/* Page-specific styles for Big Page 1 - only applied when viewing this page */
+
+.prose h2 {
+  border-left: 4px solid var(--primary, #3b82f6);
+  padding-left: 1rem;
+}

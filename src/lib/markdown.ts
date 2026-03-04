@@ -149,3 +149,41 @@ export function getAllPosts(): Post[] {
 
   return posts;
 }
+
+/** Allowed CSS filenames for page-specific styles (checked in order) */
+const PAGE_CSS_NAMES = ['styles.css', 'page.css'];
+
+/**
+ * Get page-specific CSS for a slug, if it exists.
+ * - Folder posts: looks for styles.css or page.css in content/{slug}/
+ * - Single-file posts: looks for {slug}.css in content/
+ * Returns the CSS content or null if no file exists.
+ */
+export function getPageCss(slug: string): string | null {
+  if (!slug || slug.includes('..') || path.isAbsolute(slug)) return null;
+
+  // Folder post: content/{slug}/styles.css or content/{slug}/page.css
+  if (isFolderPost(slug)) {
+    const folderPath = path.join(postsDirectory, slug);
+    for (const name of PAGE_CSS_NAMES) {
+      const cssPath = path.join(folderPath, name);
+      if (fs.existsSync(cssPath)) {
+        const resolved = path.resolve(cssPath);
+        if (resolved.startsWith(path.resolve(postsDirectory))) {
+          return fs.readFileSync(cssPath, 'utf8');
+        }
+      }
+    }
+  } else {
+    // Single-file post: content/{slug}.css
+    const cssPath = path.join(postsDirectory, `${slug}.css`);
+    if (fs.existsSync(cssPath)) {
+      const resolved = path.resolve(cssPath);
+      if (resolved.startsWith(path.resolve(postsDirectory))) {
+        return fs.readFileSync(cssPath, 'utf8');
+      }
+    }
+  }
+
+  return null;
+}

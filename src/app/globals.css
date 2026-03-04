@@ -66,7 +66,7 @@
     font-size: 2.25rem; /* ~text-3xl */
     line-height: 1.2;
     font-weight: 700;
-    margin-top: 5rem;
+    margin-top: 1rem;
   }
 
   .prose > h1:first-child,
@@ -229,6 +229,29 @@
     width: 100%;
     aspect-ratio: 16/9;
     height: auto;
+  }
+
+  /* Collapsible headings - details/summary styling */
+  .prose details.collapsible-heading summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .prose details.collapsible-heading summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .prose details.collapsible-heading summary::marker {
+    content: none;
+  }
+
+  /* Chevron - base styles */
+  .prose .collapsible-chevron {
+    display: inline-block;
+    font-size: 0.75em;
+    line-height: inherit;
+    transform-origin: center;
+    transition: transform 0.2s ease;
   }
 }
 

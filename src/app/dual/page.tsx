@@ -4,6 +4,8 @@ import remarkGfm from 'remark-gfm';
 import { notFound } from 'next/navigation';
 
 import { HomeButton } from '@/components/HomeButton';
+import { CollapsibleHeadingSync } from '@/components/CollapsibleHeadingSync';
+import { rehypeCollapsibleHeadings } from '@/lib/rehype-collapsible-headings';
 import { ModeToggle } from '@/components/ModeToggle';
 import { TableOfContents } from '@/components/TableOfContents';
 import { DualSelector } from '@/components/DualSelector';
@@ -56,7 +58,9 @@ export default async function DualPage({ searchParams }: DualPageProps) {
         />
 
         {columns.length > 0 && (
-          <div
+          <>
+            <CollapsibleHeadingSync />
+            <div
             className={`grid grid-cols-1 gap-8 ${
               columns.length === 2 ? 'lg:grid-cols-2' : ''
             }`}
@@ -84,7 +88,7 @@ export default async function DualPage({ searchParams }: DualPageProps) {
                       options={{
                         mdxOptions: {
                           remarkPlugins: [remarkGfm],
-                          rehypePlugins: [rehypeSlug],
+                          rehypePlugins: [rehypeSlug, rehypeCollapsibleHeadings],
                         },
                       }}
                     />
@@ -93,6 +97,7 @@ export default async function DualPage({ searchParams }: DualPageProps) {
               </div>
             ))}
           </div>
+          </>
         )}
       </div>
     </div>

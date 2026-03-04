@@ -1,0 +1,41 @@
+/* Page-specific styles for Big Page 2 */
+
+/* Heading colors - teal/emerald palette */
+.prose h1 { color: #0d9488; margin-top: 2rem; margin-bottom: 1.5rem; padding: 0.5rem 0; }
+.prose h2 { color: #0f766e; margin-top: 2.5rem; margin-bottom: 1rem; padding: 0.75rem 1rem; }
+.prose h3 { color: #14b8a6; margin-top: 1.75rem; margin-bottom: 0.75rem; padding: 0.25rem 0; }
+.prose h4 { color: #2dd4bf; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.prose h5 { color: #5eead4; margin-top: 1.25rem; }
+.prose h6 { color: #99f6e4; margin-top: 1rem; }
+
+/* Paragraph and text */
+.prose p { color: #134e4a; margin-bottom: 1.25rem; padding: 0 0.5rem; }
+.prose strong { color: #0f766e; }
+.prose a { color: #0d9488; }
+.prose a:hover { color: #14b8a6; }
+
+/* Lists - different spacing */
+.prose ul { margin: 1.5rem 0; padding-left: 2rem; }
+.prose ol { margin: 1.5rem 0; padding-left: 2rem; }
+.prose li { margin-bottom: 0.75rem; padding: 0.25rem 0; }
+
+/* Blockquotes */
+.prose blockquote { 
+  border-left: 4px solid #14b8a6; 
+  padding: 1rem 1.5rem; 
+  margin: 2rem 0;
+  background: rgba(20, 184, 166, 0.08);
+}
+
+/* Code blocks */
+.prose code { color: #0f766e; padding: 0.2rem 0.4rem; margin: 0 0.1rem; }
+.prose pre { padding: 1.5rem; margin: 2rem 0; }
+
+/* Tables */
+.prose table { margin: 2rem 0; }
+.prose th, .prose td { padding: 0.75rem 1.25rem; }
+
+.dark .prose h1 { color: #5eead4; }
+.dark .prose h2 { color: #2dd4bf; }
+.dark .prose h3 { color: #14b8a6; }
+.dark .prose p { color: #ccfbf1; }
