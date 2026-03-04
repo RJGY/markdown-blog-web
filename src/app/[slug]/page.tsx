@@ -28,10 +28,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const sections = 'sections' in post ? (post as { sections: { title: string; content: string; filename: string }[] }).sections : undefined;
   const layout = (frontmatter.layout as string)?.toLowerCase() === 'horizontal' ? 'horizontal' : 'vertical';
   const isHorizontal = layout === 'horizontal' && sections && sections.length > 0;
+  const chevronsEnabled = frontmatter.chevrons !== false;
 
   const mdxOptions = {
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug, rehypeCollapsibleHeadings],
+    rehypePlugins: [rehypeSlug, ...(chevronsEnabled ? [rehypeCollapsibleHeadings] : [])],
   };
 
   return (
@@ -66,7 +67,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 </aside>
               </div>
               <div className="order-1 lg:order-2 space-y-8">
-              <CollapsibleHeadingSync />
+              {chevronsEnabled && <CollapsibleHeadingSync />}
               <header className="mb-8">
                 <div className="flex flex-col gap-4 lg:pt-0 pt-20">
                   <Image

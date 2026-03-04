@@ -11,6 +11,8 @@ export interface PostFrontmatter {
   description?: string;
   layout?: string;
   tags?: string[];
+  /** When false, disables collapsible headings (chevrons). Default: true */
+  chevrons?: boolean;
   [key: string]: unknown;
 }
 
