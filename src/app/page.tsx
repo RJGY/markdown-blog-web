@@ -14,11 +14,11 @@ export default function Home() {
   return (
     <main className="w-full pt-0">
       <div className="sticky top-0 z-10 w-full bg-[var(--background)] border-b border-slate-200 dark:border-slate-700 opacity-50">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-3 py-3 px-4">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-3 py-3">
           <ModeToggle />
         </div>
       </div>
-      <div className="mx-auto max-w-6xl py-12 px-4">
+      <div className="mx-auto max-w-6xl py-15">
         <div className="mb-8 pt-15">
           <div className="flex flex-col items-start gap-4">
             <Image
@@ -47,6 +47,12 @@ export default function Home() {
                 <h2 className="text-xl font-semibold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {post.frontmatter.title}
                 </h2>
+                <p className="text-slate-500 dark:text-slate-500 text-sm mb-2">
+                  {post.frontmatter.date}
+                </p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-3 line-clamp-3">
+                  {post.frontmatter.description || ''}
+                </p>
                 {tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-2">
                     {tags.map((tag) => (
@@ -59,12 +65,6 @@ export default function Home() {
                     ))}
                   </div>
                 )}
-                <p className="text-slate-600 dark:text-slate-400 text-sm mb-2 line-clamp-3">
-                  {post.frontmatter.description || ''}
-                </p>
-                <p className="text-slate-500 dark:text-slate-500 text-sm">
-                  {post.frontmatter.date}
-                </p>
               </Link>
             );
           })}
