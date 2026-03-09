@@ -79,6 +79,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                   />
                   <div className="pt-5 lg:pt-54">
                     <h1 className="text-4xl font-bold mb-2">{frontmatter.title}</h1>
+                    <time className="text-gray-500">{frontmatter.date}</time>
+                    <h3 className="text-lg mb-2">{frontmatter.description}</h3>
                     {Array.isArray(frontmatter.tags) && frontmatter.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-2">
                         {frontmatter.tags.map((tag: string) => (
@@ -91,8 +93,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                         ))}
                       </div>
                     )}
-                    <h3 className="text-lg mb-2">{frontmatter.description}</h3>
-                    <time className="text-gray-500">{frontmatter.date}</time>
                   </div>
                 </div>
               </header>
