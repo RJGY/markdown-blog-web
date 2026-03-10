@@ -30,7 +30,11 @@ const code = "Hello World";
 
 ## Images
 
-![Hosting Logo](https://www.svgrepo.com/show/78615/hosting.svg)
+![Hosting Logo](images/hosting.svg)
+
+![Local image from page folder](images/sample.png)
+
+![Image from public folder](/logo.png)
 
 ## Links
 

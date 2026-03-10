@@ -223,6 +223,13 @@
     border-radius: 0;
   }
 
+  /* Prose images - ensure they display and scale properly */
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
   /* Responsive iframes (e.g. YouTube embeds) - constrain to container width */
   .prose iframe {
     max-width: 100%;

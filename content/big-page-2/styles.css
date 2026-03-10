@@ -1,5 +1,14 @@
 /* Page-specific styles for Big Page 2 */
 
+/* Article width and margins - control the content area */
+.article-layout {
+  --article-max-width: 60rem;   /* default 72rem; smaller = more margin, larger = less margin */
+  --article-margin-x: 2rem;     /* horizontal padding (space from viewport edge) */
+  max-width: var(--article-max-width);
+  padding-left: var(--article-margin-x);
+  padding-right: var(--article-margin-x);
+}
+
 /* Heading colors - teal/emerald palette */
 .prose h1 { color: #0d9488; margin-top: 2rem; margin-bottom: 1.5rem; padding: 0.5rem 0; }
 .prose h2 { color: #0f766e; margin-top: 2.5rem; margin-bottom: 1rem; padding: 0.75rem 1rem; }
