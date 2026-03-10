@@ -14,11 +14,11 @@ export default function Home() {
   return (
     <main className="w-full pt-0">
       <div className="sticky top-0 z-10 w-full bg-[var(--background)] border-b border-slate-200 dark:border-slate-700 opacity-50">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-3 py-3">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-3 py-3 px-4 lg:px-0">
           <ModeToggle />
         </div>
       </div>
-      <div className="mx-auto max-w-6xl py-15">
+      <div className="mx-auto max-w-6xl py-11 lg:py-15 px-4 lg:px-0">
         <div className="mb-8 pt-15">
           <div className="flex flex-col items-start gap-4">
             <Image
