@@ -36,6 +36,18 @@
   background: rgba(20, 184, 166, 0.08);
 }
 
+/* Highlighted text (use ==text== in markdown) */
+.prose mark {
+  background: linear-gradient(120deg, rgba(20, 184, 166, 0.35) 0%, rgba(45, 212, 191, 0.35) 100%);
+  color: inherit;
+  padding: 0.1em 0.25em;
+  border-radius: 0.2em;
+}
+
+.dark .prose mark {
+  background: linear-gradient(120deg, rgba(20, 184, 166, 0.4) 0%, rgba(45, 212, 191, 0.4) 100%);
+}
+
 /* Code blocks */
 .prose code { color: #0f766e; padding: 0.2rem 0.4rem; margin: 0 0.1rem; }
 .prose pre { padding: 1.5rem; margin: 2rem 0; }

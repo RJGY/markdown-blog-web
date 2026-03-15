@@ -252,6 +252,18 @@
     content: none;
   }
 
+  /* Highlighted text (use ==text== in markdown) - base style for pages without custom CSS */
+  .prose mark {
+    background-color: rgba(250, 204, 21, 0.4); /* amber-400 */
+    color: inherit;
+    padding: 0.1em 0.25em;
+    border-radius: 0.2em;
+  }
+
+  .dark .prose mark {
+    background-color: rgba(251, 191, 36, 0.35);
+  }
+
   /* Chevron - base styles */
   .prose .collapsible-chevron {
     display: inline-block;

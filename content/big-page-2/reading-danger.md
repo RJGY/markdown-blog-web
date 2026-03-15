@@ -7,6 +7,8 @@ tags: "very big danger, advanced"
 
 ## Reading Danger & Progression
 
+This section covers ==micro-level== and ==macro-level== discard reading strategies.
+
 ## Micro-Level Discard Reading:
 [introduction]
 ### **裏筋 & またぎ筋:**

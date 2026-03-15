@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+import { remarkHighlightMark } from 'remark-highlight-mark';
 
 import { getPostBySlug, getPageCss, isPost } from '@/lib/markdown';
 import { rehypeCollapsibleHeadings } from '@/lib/rehype-collapsible-headings';
+import { highlightHandler } from '@/lib/rehype-highlight-handler';
 import { transformImagePaths } from '@/lib/transform-image-paths';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -32,8 +34,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const chevronsEnabled = frontmatter.chevrons !== false;
 
   const mdxOptions = {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkHighlightMark],
     rehypePlugins: [rehypeSlug, ...(chevronsEnabled ? [rehypeCollapsibleHeadings] : [])],
+    remarkRehypeOptions: {
+      handlers: { highlight: highlightHandler },
+    },
   };
 
   return (
@@ -43,7 +48,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       )}
       <div className="w-full pt-0">
         <div className="sticky top-0 z-10 w-full bg-[var(--background)] border-b border-slate-200 dark:border-slate-700 opacity-50">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 py-3 px-4">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 py-3">
             <div className="flex items-center gap-3">
               <TocMobileMenu headings={headings} />
               <HomeButton />

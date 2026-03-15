@@ -5,7 +5,7 @@ description: "How to build a blog"
 tags: "tutorial, getting-started"
 ---
 
-This is a post written in **Markdown**. I can just drop this file here and it works!
+This is a post written in **Markdown**. I can just drop this file here and it works! Use ==double equals== around text to ==highlight it==.
 
 ## Heading 2
 
