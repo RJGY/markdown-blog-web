@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { HomeButton } from '@/components/HomeButton';
 import { CollapsibleHeadingSync } from '@/components/CollapsibleHeadingSync';
 import { rehypeCollapsibleHeadings } from '@/lib/rehype-collapsible-headings';
+import { transformTableLineBreaks } from '@/lib/transform-table-line-breaks';
 import { ModeToggle } from '@/components/ModeToggle';
 import { TableOfContents } from '@/components/TableOfContents';
 import { DualSelector } from '@/components/DualSelector';
@@ -84,7 +85,7 @@ export default async function DualPage({ searchParams }: DualPageProps) {
 
                   <div className="prose prose-slate lg:prose-xl dark:prose-invert">
                     <MDXRemote
-                      source={post.content}
+                      source={transformTableLineBreaks(post.content)}
                       options={{
                         mdxOptions: {
                           remarkPlugins: [remarkGfm],

@@ -43,7 +43,14 @@ const code = "Hello World";
 | Tables        | Are           | Cool  |
 | ------------- |:-------------:| -----:|
 | col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |       
+| col 2 is      | centered      |   $12 |
+
+### Table with line breaks in cells
+
+| Col1 | Col2 |
+|------|------|
+| Line 1<br/>Line 2 | Single line |
+| A<br/>B<br/>C | Multi-line cell |       
 
 ## Blockquotes
 
