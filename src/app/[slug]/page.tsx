@@ -7,7 +7,6 @@ import { getPostBySlug, getPageCss, isPost } from '@/lib/markdown';
 import { rehypeCollapsibleHeadings } from '@/lib/rehype-collapsible-headings';
 import { highlightHandler } from '@/lib/rehype-highlight-handler';
 import { transformImagePaths } from '@/lib/transform-image-paths';
-import { transformTableLineBreaks } from '@/lib/transform-table-line-breaks';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { ActiveTocProvider } from '@/components/ActiveTocContext';
@@ -124,7 +123,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                       </div>
                       <div className="p-4 pt-2 prose prose-slate lg:prose-xl dark:prose-invert max-w-none">
                         <MDXRemote
-                          source={transformImagePaths(transformTableLineBreaks(section.content), slug)}
+                          source={transformImagePaths(section.content, slug)}
                           options={{ mdxOptions: mdxOptions }}
                         />
                       </div>
@@ -134,7 +133,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               ) : (
                 <div className="prose prose-slate lg:prose-xl dark:prose-invert">
                   <MDXRemote
-                    source={transformImagePaths(transformTableLineBreaks(content), slug)}
+                    source={transformImagePaths(content, slug)}
                     options={{ mdxOptions }}
                   />
                 </div>
